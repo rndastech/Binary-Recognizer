@@ -10,7 +10,7 @@ ctx = canvas.getContext("2d");
 
 async function loadModel() {
     // Load the model
-    const model = await tf.loadLayersModel('model.json');
+    const model = await tf.loadLayersModel('model/model.json');
     model.summary();}
 
 loadModel();
