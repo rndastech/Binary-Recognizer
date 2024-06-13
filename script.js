@@ -8,6 +8,13 @@ saveImage =
     document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
 
+async function loadModel() {
+    // Load the model
+    const model = await tf.loadLayersModel('model.json');
+    model.summary();}
+
+loadModel();
+
 let prevMouseX, prevMouseY, snapshot,
     isDrawing = false,
     selectedTool = "pencil",
@@ -19,6 +26,27 @@ const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000";
+const gridSize = 100;
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.strokeStyle = "#ccc";
+for (let x = 0; x <= canvas.width; x += gridSize) {
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, 100);
+    ctx.moveTo(x, 200);
+    ctx.lineTo(x, 300);
+}
+    ctx.moveTo(350, 100);
+    ctx.lineTo(350, 200);
+    ctx.moveTo(450, 100);
+    ctx.lineTo(450, 200);
+for (let y = 0; y <= canvas.height; y += gridSize) {
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+}
+ctx.stroke();
+ctx.closePath();
+ctx.restore();
 }
 
 window.addEventListener("load", () => {
@@ -84,12 +112,34 @@ clearCanvas.addEventListener("click", () => {
 
 })
 
+// saveImage.addEventListener("click", () => {
+//     const link = document.createElement("a");
+//     link.download = `${Date.now()}`.jpg;
+//     link.href = canvas.toDataURL();
+//     link.click();
+// })
+
 saveImage.addEventListener("click", () => {
+    // Create an off-screen canvas for resizing
+    const resizedCanvas = document.createElement("canvas");
+    const ctx = resizedCanvas.getContext("2d");
+
+    // Set the desired dimensions for the resized image
+    const width = 228;
+    const height = 84;
+    resizedCanvas.width = width;
+    resizedCanvas.height = height;
+
+    // Draw the original canvas content onto the resized canvas with scaling
+    ctx.drawImage(canvas, 0, 0, 800, 300, 0, 0, width, height);
+
+    // Create a download link for the resized image
     const link = document.createElement("a");
-    link.download = `${Date.now()}`.jpg;
-    link.href = canvas.toDataURL();
+    link.download = `${Date.now()}.png`;
+    link.href = resizedCanvas.toDataURL("image/png");
     link.click();
-})
+});
+
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
