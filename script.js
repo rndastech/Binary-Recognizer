@@ -12,7 +12,7 @@ let num1=0, num2=0;
 let bin1="", bin2="";
 
 async function loadModel() {
-    model = await tf.loadLayersModel('model.json');}
+    model = await tf.loadLayersModel('model/model.json');}
 
 loadModel();
 
