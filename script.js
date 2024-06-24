@@ -12,7 +12,7 @@ let num1=0, num2=0;
 let bin1="", bin2="";
 
 async function loadModel() {
-    model = await tf.loadLayersModel('model/model.json');}
+    model = await tf.loadLayersModel('model.json');}
 
 loadModel();
 
@@ -172,8 +172,8 @@ saveImage.addEventListener("click", () => {
     bin2 = bin2.concat(predict(context, 56, 28, 28, 7));
     num1 = binnum(bin1);
     num2 = binnum(bin2);
-    document.getElementById("firstnum").innerHTML = bin1+" * "+bin2+" = "+intToBinaryString(num1*num2);
-    document.getElementById("secondnum").innerHTML = "=> "+num1+" * "+num2+" = "+(num1*num2);
+    document.getElementById("firstnum").innerHTML = bin1+" ÷ "+bin2+" = "+intToBinaryString(num1/num2);
+    document.getElementById("secondnum").innerHTML = "=> "+num1+" ÷ "+num2+" = "+(num1/num2);
     bin1="";
     bin2="";
     num1=0;

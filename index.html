@@ -15,7 +15,21 @@
 </head>
 
 <body>
-    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="binary-code.png" alt="Logo">
+                <span style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">RNDas Binary Recognizer</span>
+            </div>
+            <ul class="navbar-links">
+                <li><a href="/index.html">Home Page</a></li>
+                <li><a href="/tutorial.html">How to Use</a></li>
+                <li><a href="https://rndastech.github.io/">About Me</a></li>
+            </ul>
+            <button class="contact-button" onclick="location.href='mailto:rndas2004@gmail.com'" type="button">Contact Me</button>
+        </div>
+    </nav>
+
     <div class="container">
         <section class="tools-board">
             <div class="row" style="display: flex; justify-content: center; align-items: center;">
@@ -46,12 +60,40 @@
         <canvas></canvas>
         </section>
     </div>
-    <div>
-        <p id="firstnum">00000000 * 00000000 = 0</p>
-        <p id="secondnum">=> 0 * 0 = 0</p>
+    <div class="centered-container">
+        <p id="firstnum">00000000 ÷ 00000000 = 0</p>
+        <p id="secondnum">=> 0 ÷ 0 = 0</p>
+        <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Note: The ML Model is not perfect and can make mistakes.</p>
     </div>
 </body>
 <footer>
-    <p>© 2024 RNDasTech. All Rights Reserved.</p>
+    <footer style="font-family:Arial, Helvetica, sans-serif">
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h2>About Me</h2>
+                <p>Specialist @ CodeForces<br>4* @ CodeChef<br>NTSE Scholar<br>IIIT Allahabad '27</p>
+            </div>
+            <div class="footer-section links">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li><a href="/index.html">Home Page</a></li>
+                    <li><a href="https://rndastech.github.io/">About Me</a></li>
+                    <li><a href="https://github.com/rndastech">GitHub</a></li>
+                    <li><a href="https://codeforces.com/profile/rn_das_2004">CodeForces</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h2>Follow Me</h2>
+                <div class="social-links">
+                    <a href="https://github.com/rndastech"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/rndascode/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/ritesh-narayan-das-6196b3268/"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Ritesh Narayan Das
+        </div>
+    </footer>
 </footer>
 </html>
