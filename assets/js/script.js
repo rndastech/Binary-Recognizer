@@ -1,18 +1,15 @@
-const canvas = 
-    document.querySelector("canvas"),
-toolBtns = 
-    document.querySelectorAll(".tool"),
-clearCanvas = 
-    document.querySelector(".clear-canvas"),
-saveImage = 
-    document.querySelector(".save-img"),
-ctx = canvas.getContext("2d");
+const canvas = document.querySelector("canvas"),
+    toolBtns = document.querySelectorAll(".tool"),
+    clearCanvas = document.querySelector(".clear-canvas"),
+    saveImage = document.querySelector(".save-img"),
+    ctx = canvas.getContext("2d");
 let model;
-let num1=0, num2=0;
-let bin1="", bin2="";
+let num1 = 0, num2 = 0;
+let bin1 = "", bin2 = "";
 
 async function loadModel() {
-    model = await tf.loadLayersModel('model/model.json');}
+    model = await tf.loadLayersModel('model/model.json');
+}
 
 loadModel();
 
@@ -36,15 +33,14 @@ function predict(context, starty, wdt, ht, pos) {
     return predictedLabel;
 }
 
-
-function binnum(bin){
+function binnum(bin) {
     const integerValue = parseInt(bin, 2);
     return integerValue;
 }
 
 function intToBinaryString(number) {
     return number.toString(2);
-  }
+}
 
 let prevMouseX, prevMouseY, snapshot,
     isDrawing = false,
@@ -57,27 +53,27 @@ const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000";
-const gridSize = 100;
-ctx.lineWidth = 1;
-ctx.beginPath();
-ctx.strokeStyle = "#ccc";
-for (let x = 0; x <= canvas.width; x += gridSize) {
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, 100);
-    ctx.moveTo(x, 200);
-    ctx.lineTo(x, 300);
-}
+    const gridSize = 100;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.strokeStyle = "#ccc";
+    for (let x = 0; x <= canvas.width; x += gridSize) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 100);
+        ctx.moveTo(x, 200);
+        ctx.lineTo(x, 300);
+    }
     ctx.moveTo(350, 100);
     ctx.lineTo(350, 200);
     ctx.moveTo(450, 100);
     ctx.lineTo(450, 200);
-for (let y = 0; y <= canvas.height; y += gridSize) {
-    ctx.moveTo(0, y);
-    ctx.lineTo(canvas.width, y);
-}
-ctx.stroke();
-ctx.closePath();
-ctx.restore();
+    for (let y = 0; y <= canvas.height; y += gridSize) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+    }
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
 }
 
 window.addEventListener("load", () => {
@@ -86,63 +82,49 @@ window.addEventListener("load", () => {
     setCanvasBackground();
 });
 
-
 const startDraw = (e) => {
     isDrawing = true;
-    prevMouseX = e.offsetX; 
-    prevMouseY = e.offsetY;
+    prevMouseX = e.offsetX || e.touches[0].clientX - canvas.offsetLeft;
+    prevMouseY = e.offsetY || e.touches[0].clientY - canvas.offsetTop;
     ctx.beginPath();
     ctx.lineWidth = brushWidth;
     ctx.strokeStyle = "#000";
     ctx.fillStyle = "#000";
-    snapshot = ctx.getImageData(0, 0, canvas.width,
-    canvas.height);
+    snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
 const drawPencil = (e) => {
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(e.offsetX || e.touches[0].clientX - canvas.offsetLeft, e.offsetY || e.touches[0].clientY - canvas.offsetTop);
     ctx.stroke();
 }
-
 
 const drawing = (e) => {
     if (!isDrawing) return;
     ctx.putImageData(snapshot, 0, 0);
 
-    if (selectedTool === "brush" && selectedTool === "pencil" 
-    || selectedTool === "eraser") {
-
-        ctx.strokeStyle = selectedTool === "eraser" 
-        ? "#fff" : "#000";
-        ctx.lineTo(e.offsetX, e.offsetY);
+    if (selectedTool === "brush" && selectedTool === "pencil" || selectedTool === "eraser") {
+        ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : "#000";
+        ctx.lineTo(e.offsetX || e.touches[0].clientX - canvas.offsetLeft, e.offsetY || e.touches[0].clientY - canvas.offsetTop);
         ctx.stroke();
-    } 
-    else {
+    } else {
         drawPencil(e);
-
     }
 }
 
-
 toolBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        document.querySelector(".options .active")
-        .classList.remove("active");
+        document.querySelector(".options .active").classList.remove("active");
         btn.classList.add("active");
         selectedTool = btn.id;
         console.log(selectedTool);
-
     });
-
 });
 
-
 clearCanvas.addEventListener("click", () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     document.getElementById("firstnum").innerHTML = "00000000 * 00000000 = 0";
     document.getElementById("secondnum").innerHTML = "=> 0 * 0 = 0";
     setCanvasBackground();
-
 })
 
 saveImage.addEventListener("click", () => {
@@ -172,18 +154,32 @@ saveImage.addEventListener("click", () => {
     bin2 = bin2.concat(predict(context, 56, 28, 28, 7));
     num1 = binnum(bin1);
     num2 = binnum(bin2);
-    document.getElementById("firstnum").innerHTML = bin1+" ÷ "+bin2+" = "+intToBinaryString(num1/num2);
-    document.getElementById("secondnum").innerHTML = "=> "+num1+" ÷ "+num2+" = "+(num1/num2);
-    bin1="";
-    bin2="";
-    num1=0;
-    num2=0;
+    document.getElementById("firstnum").innerHTML = bin1 + " ÷ " + bin2 + " = " + intToBinaryString(num1 / num2);
+    document.getElementById("secondnum").innerHTML = "=> " + num1 + " ÷ " + num2 + " = " + (num1 / num2);
+    bin1 = "";
+    bin2 = "";
+    num1 = 0;
+    num2 = 0;
 });
-
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 canvas.addEventListener("mouseup", () => isDrawing = false);
+
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    startDraw(e);
+});
+
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    drawing(e);
+});
+
+canvas.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    isDrawing = false;
+});
 
 function grayscaleArrayToImage(grayscaleImage, width, height) {
     const canvas = document.createElement('canvas');
