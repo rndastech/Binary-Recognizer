@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RNDas Binary Recognizer</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/aboutstyle.css">
     <link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
-    <script src="assets/js/script.js" defer></script>
     <script src= "https://kit.fontawesome.com/c353d71a36.js" crossorigin="anonymous"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
@@ -31,41 +28,11 @@
             <button class="contact-button" onclick="location.href='mailto:rndas2004@gmail.com'" type="button">Contact Me</button>
         </div>
     </nav>
-
+    <div class="container"><h1>About App</h1></div>
     <div class="container">
-        <section class="tools-board">
-            <div class="row" style="display: flex; justify-content: center; align-items: center;">
-                <ul class="options">
-                    <li class="option active tool" id="pencil">
-                        <i class="fas fa-pencil" id="icon"></i>
-                        <span class="label">Pencil</span>
-                    </li>
-                    <li class="option tool" id="eraser">
-                        <i class="fas fa-eraser" id="icon"></i>
-                        <span class="label">Eraser</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="row buttons" style="text-align: center;">
-                <button class="clear-canvas" type="button">Clear Canvas</button>
-                <button class="save-img">Compute</button>
-            </div>
-
-            <div class="about-dev" style="text-align: center;">
-                <p>Developer: Ritesh N Das</p>
-            <a class="github-button" href="https://github.com/rndastech/Binary-Recognizer" data-color-scheme="no-preference: dark_dimmed; light: dark_dimmed; dark: light;" data-size="large" aria-label="Download rndastech/Binary-Recognizer on GitHub">View Github Repo</a>
-            </div>
-        </section>
-
-        <section class="drawing-board">
-        <canvas></canvas>
-        </section>
-    </div>
-    <div class="centered-container">
-        <p id="firstnum">00000000 ÷ 00000000 = 0</p>
-        <p id="secondnum">=> 0 ÷ 0 = 0</p>
-        <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Note: The ML Model is not perfect and can make mistakes.</p>
+        <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+            RNDas Binary Recognizer is a powerful website designed to interpret and process handwritten symbols, focusing on binary digits 0 and 1, and a variety of mathematical symbols. Leveraging advanced deep learning techniques, specifically neural networks, the app delivers high accuracy in handwriting recognition. Users can write symbols and equations on their device’s screen, with the app capturing and processing the input. It accurately recognizes handwritten binary digits and mathematical symbols such as +, -, *, and ÷, allowing users to write out complete mathematical expressions effortlessly. Upon recognizing a complete expression, the app performs the specified operation, providing instant results. Utilizing convolutional neural networks (CNNs) for image recognition tasks, the app ensures precise interpretation of various handwriting styles. With an interactive and intuitive interface, and applications in both educational and practical contexts, RNDas Binary Recognizer seamlessly combines cutting-edge technology with practical functionality to make handwriting recognition and mathematical operations efficient and user-friendly.</p>
+        <img src="assets/img/binary-code.png" width="20%" height="20%" alt="ML Model Making A Prediction" style="margin-left: 20px; margin-right: 20px;">
     </div>
 </body>
 <footer>
