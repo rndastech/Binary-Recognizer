@@ -1,5 +1,11 @@
-# RNDas Binary Recognizer
 
+<div align="center">
+<a href="https://rndastech.github.io/Binary-Recognizer/">
+    <img alt="poster" src="https://github.com/rndastech/Binary-Recognizer/blob/main/assets/img/App_Poster.png?raw=true">
+</a>
+<br/>
+<br>
+</div>
 RNDas Binary Recognizer is a powerful tool designed to interpret and process handwritten symbols, focusing on binary digits 0 and 1, as well as a variety of mathematical symbols. Leveraging advanced deep learning techniques and neural networks, our website delivers high accuracy in handwriting recognition.
 
 ## Features
@@ -25,6 +31,7 @@ We welcome contributions to improve RNDas Binary Recognizer. Please fork the rep
 
 ## License
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
+Copyright © 2024-present Ritesh Narayan Das
 
 ## Contact
 For any inquiries or feedback, please open an issue or reach out to us at rndas2004@gmail.com.
