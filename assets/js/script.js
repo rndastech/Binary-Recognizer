@@ -4,14 +4,53 @@ const canvas = document.querySelector("canvas"),
     saveImage = document.querySelector(".save-img"),
     ctx = canvas.getContext("2d");
 let model;
+let modelsym;
 let num1 = 0, num2 = 0;
 let bin1 = "", bin2 = "";
+let symbol = "";
+ans = 0;
 
 async function loadModel() {
-    model = await tf.loadLayersModel('model/model.json');
+    model = await tf.loadLayersModel('model/DigitClassifier/model.json');
+    modelsym = await tf.loadLayersModel('model/SymbolRecognizer/model.json');
 }
 
 loadModel();
+
+function computation(num1, num2, symbol) {
+    if(symbol === "+") {
+        return num1 + num2;
+    }
+    else if(symbol === "-") {
+        return num1 - num2;
+    }
+    else if(symbol === "*") {
+        return num1 * num2;
+    }
+    else if(symbol === "÷") {
+        return num1 / num2;
+    }
+}
+
+function predictsym(context, starty, wdt, ht, pos) {
+let startx = pos * wdt;
+const imageData = context.getImageData(startx, starty, 28, 28);
+const data = imageData.data;
+const grayscaleImage = new Float32Array(wdt * ht);
+for (let i = 0; i < wdt * ht; i++) {
+    const offset = i * 4;
+    const r = data[offset];
+    const g = data[offset + 1];
+    const b = data[offset + 2];
+    grayscaleImage[i] = 0.299 * r + 0.587 * g + 0.114 * b;
+}
+const tensor = tf.tensor(grayscaleImage, [1, 28, 28, 1], 'float32');
+const prediction = modelsym.predict(tensor);
+const predictionData = prediction.dataSync();
+const predictedLabel = predictionData.indexOf(Math.max(...predictionData));
+const labels = ['+', '÷', '*', '-'];
+return labels[predictedLabel];
+}
 
 function predict(context, starty, wdt, ht, pos) {
     let startx = pos * wdt;
@@ -116,7 +155,6 @@ toolBtns.forEach(btn => {
         document.querySelector(".options .active").classList.remove("active");
         btn.classList.add("active");
         selectedTool = btn.id;
-        console.log(selectedTool);
     });
 });
 
@@ -154,8 +192,10 @@ saveImage.addEventListener("click", () => {
     bin2 = bin2.concat(predict(context, 56, 28, 28, 7));
     num1 = binnum(bin1);
     num2 = binnum(bin2);
-    document.getElementById("firstnum").innerHTML = bin1 + " ÷ " + bin2 + " = " + intToBinaryString(num1 / num2);
-    document.getElementById("secondnum").innerHTML = "=> " + num1 + " ÷ " + num2 + " = " + (num1 / num2);
+    symbol = predictsym(context, 28, 28, 28, 3.5);
+    ans = computation(num1, num2, symbol);
+    document.getElementById("firstnum").innerHTML = bin1 + " " + symbol + " " + bin2 + " = " + intToBinaryString(ans);
+    document.getElementById("secondnum").innerHTML = "=> " + num1 + " " + symbol + " " + num2 + " = " + ans;
     bin1 = "";
     bin2 = "";
     num1 = 0;
@@ -190,10 +230,10 @@ function grayscaleArrayToImage(grayscaleImage, width, height) {
     for (let i = 0; i < grayscaleImage.length; i++) {
         const value = grayscaleImage[i];
         const index = i * 4;
-        imageData.data[index] = value;        // Red
-        imageData.data[index + 1] = value;    // Green
-        imageData.data[index + 2] = value;    // Blue
-        imageData.data[index + 3] = 255;      // Alpha (fully opaque)
+        imageData.data[index] = value;        
+        imageData.data[index + 1] = value;    
+        imageData.data[index + 2] = value;    
+        imageData.data[index + 3] = 255;      
     }
     context.putImageData(imageData, 0, 0);
     const img = new Image();
